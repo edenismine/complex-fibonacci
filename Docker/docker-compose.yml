@@ -1,0 +1,51 @@
+version: "3.1"
+services:
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: lol
+  redis:
+    image: redis
+  api:
+    depends_on: ["postgres", "redis"]
+    build:
+      context: ../api
+      dockerfile: dev.Dockerfile
+    volumes:
+      - /app/node_modules # tell docker not to overwrite node modules
+      - ../api:/app # mount source folder
+    environment:
+      PGDATABASE: postgres
+      PGHOST: postgres
+      PGPASSWORD: lol
+      PGPORT: "5432"
+      PGUSER: postgres
+      REDIS_HOST: redis
+      REDIS_PORT: "6379"
+      SERVER_PORT: "5000"
+  worker:
+    depends_on: ["api"]
+    build:
+      context: ../worker
+      dockerfile: dev.Dockerfile
+    volumes:
+      - /app/node_modules # tell docker not to overwrite node modules
+      - ../worker:/app # mount source folder
+    environment:
+      REDIS_HOST: redis
+      REDIS_PORT: "6379"
+  client:
+    depends_on: ["worker"]
+    build:
+      context: ../client
+      dockerfile: dev.Dockerfile
+    volumes:
+      - /app/node_modules # tell docker not to overwrite node modules
+      - ../client:/app # mount source folder
+  router:
+    restart: always
+    build:
+      context: ../nginx
+      dockerfile: dev.Dockerfile
+    ports:
+      - "3050:80"
