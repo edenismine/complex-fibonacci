@@ -47,21 +47,24 @@ app.get('/values/current', async (req, res) => {
 
 app.post('/values', async (req, res) => {
   const index = req.body.index
-
   if (parseInt(index, 10) > 40) {
     return res.status(422).send('Index too high')
+  } else {
+    redisClient.hset('values', index, 'Nothing yet!')
+    redisPublisher.publish('insert', index)
+    return res
+      .status(200)
+      .send(
+        await pgClient.query('INSERT INTO values(number) VALUES($1)', [index]),
+      )
   }
-
-  redisClient.hset('values', index, 'Nothing yet!')
-  redisPublisher.publish('insert', index)
-  pgClient.query('INSERT INTO values(number) VALUES($1)', [index])
-
-  res.send({ working: true })
 })
 
 function createTable(retriesLeft: number) {
   if (retriesLeft > 0) {
-    console.log(`Attempting (${retriesLeft} retries left) to connect to postgress...`)
+    console.log(
+      `Attempting (${retriesLeft} retries left) to connect to postgress...`,
+    )
     pgClient
       .connect()
       .then((client) =>
