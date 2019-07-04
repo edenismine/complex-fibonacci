@@ -6,18 +6,29 @@ A simple proof of concept using a react application backed by redis, postgres an
 
 ## Environment variables
 
-The following environment variables need to be set at runtime:
-- REDIS_HOST
-- REDIS_PORT
-- PG_HOST
-- PG_DATABASE
-- PG_PORT
-- PG_USER
-- PG_PASSWORD
+The following environment variables need to be set at runtime.
 
-In addition to the previous variables, the following variables need to be set at buildtime:
-- CI
-- AWS_ACCOUNT_ID
-- IMAGE_TAG
+Worker and API server:
+- REDIS_HOST url
+- REDIS_PORT integer
 
-Plus the default AWS environment variables ($AWS_...).
+API server:
+- PG_HOST url
+- PG_DATABASE string
+- PG_PORT integer
+- PG_USER string
+- PG_PASSWORD string
+
+API server and router:
+- API_PORT integer
+- CLIENT_PORT integer
+
+The following variables need to be set at buildtime.
+
+Worker, API server and client:
+- CI boolean
+
+If pushing to ECR using CodeBuild, the following variables should be set:
+- AWS_ACCOUNT_ID string
+- IMAGE_TAG string
+- Plus the default AWS environment variables ($AWS_...).
