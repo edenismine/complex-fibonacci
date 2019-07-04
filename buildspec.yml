@@ -37,4 +37,4 @@ artifacts:
   files:
     - 'build/Dockerrun.aws.json'
   discard-paths: yes
-  name: $(date +%Y-%m-%d)-Dockerrun.aws.json 
+  name: $CODEBUILD_SOURCE_VERSION-codebuild 
