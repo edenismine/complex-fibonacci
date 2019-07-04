@@ -45,7 +45,7 @@ services:
   router:
     restart: always
     build:
-      context: ../nginx
+      context: ../router
       dockerfile: dev.Dockerfile
     ports:
       - "3050:80"

@@ -1,5 +1,13 @@
-# npm run build is required before building prod image
+FROM node as builder
+WORKDIR /app
+COPY ./*.json .
+RUN echo 'installing build dependencies...' && npm install
+COPY ./src ./src
+COPY ./public ./public
+RUN echo 'testing...' && npm run test
+RUN echo 'building...' && npm run build
+
 FROM nginx
 EXPOSE 3000
 COPY ./nginx/prod.conf /etc/nginx/conf.d/default.conf
-COPY ./build /usr/share/nginx/html
+COPY --from=builder /app/build /usr/share/nginx/html
