@@ -8,18 +8,18 @@ read -r -d '' __json << EOM
       "name": "fibonacci-client",
       "image": "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/fibonacci-client:${IMAGE_TAG}",
       "hostname": "client",
-      "memory": 512
+      "memoryReservation": 1024
     },
     {
       "name": "fibonacci-api",
       "image": "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/fibonacci-api:${IMAGE_TAG}",
       "hostname": "api",
-      "memory": 512
+      "memoryReservation": 1024
     },
     {
       "name": "fibonacci-worker",
       "image": "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/fibonacci-worker:${IMAGE_TAG}",
-      "memory": 512
+      "memoryReservation": 1024
     },
     {
       "name": "fibonacci-router",
@@ -32,7 +32,7 @@ read -r -d '' __json << EOM
         }
       ],
       "links": ["fibonacci-client", "fibonacci-api"],
-      "memory": 512
+      "memoryReservation": 1024
     }
   ]
 }
