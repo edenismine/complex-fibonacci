@@ -1,6 +1,6 @@
 FROM node as builder
 WORKDIR /app
-COPY ./*.json .
+COPY ./*.json ./
 RUN echo 'installing build dependencies...' && npm install
 COPY ./src ./src
 COPY ./public ./public

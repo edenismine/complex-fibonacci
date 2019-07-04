@@ -1,6 +1,6 @@
 FROM node
 WORKDIR /app
-COPY ./*.json .
+COPY ./*.json ./
 RUN echo 'installing dependencies...' && npm install
 COPY ./src ./src
 RUN echo 'compiling typescript...' && npx tsc
