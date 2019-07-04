@@ -1,4 +1,6 @@
 FROM node as builder
+ARG CI
+ENV CI=$CI
 WORKDIR /app
 COPY ./*.json ./
 RUN echo 'installing build dependencies...' && npm install
