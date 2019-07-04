@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 echo 'Creating deployable "Dockerrun.aws.json" file.'
 read -r -d '' __json << EOM
 {
@@ -39,3 +39,4 @@ read -r -d '' __json << EOM
 EOM
 mkdir -p build
 echo ${__json} > build/Dockerrun.aws.json
+cat build/Dockerrun.aws.json
