@@ -1,0 +1,31 @@
+{
+  "AWSEBDockerrunVersion": 2,
+  "containerDefinitions": [
+    {
+      "name": "fibonacci-client",
+      "image": "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/fibonacci-client:$IMAGE_TAG",
+      "hostname": "client"
+    },
+    {
+      "name": "fibonacci-api",
+      "image": "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/fibonacci-api:$IMAGE_TAG",
+      "hostname": "api"
+    },
+    {
+      "name": "fibonacci-worker",
+      "image": "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/fibonacci-worker:$IMAGE_TAG"
+    },
+    {
+      "name": "fibonacci-router",
+      "image": "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/fibonacci-router:$IMAGE_TAG",
+      "essential": true,
+      "portMappings": [
+        {
+          "containerPort": 80,
+          "hostPort": 80
+        }
+      ],
+      "links": ["fibonacci-client", "fibonacci-api"]
+    }
+  ]
+}
