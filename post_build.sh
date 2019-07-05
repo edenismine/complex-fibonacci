@@ -1,4 +1,10 @@
 #!/usr/bin/env bash
+echo Build completed on `date`
+echo Pushing the Docker images...
+docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/fibonacci-client:$IMAGE_TAG
+docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/fibonacci-api:$IMAGE_TAG
+docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/fibonacci-worker:$IMAGE_TAG
+docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/fibonacci-router:$IMAGE_TAG
 echo 'Creating deployable "Dockerrun.aws.json" file.'
 read -r -d '' __json << EOM
 {
